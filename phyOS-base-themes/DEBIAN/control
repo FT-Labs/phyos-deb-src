@@ -1,0 +1,10 @@
+Package: phyos-base-themes
+Version: 1.1-0
+Section: utils
+Origin: https://github.com/FT-Labs/phyOS-base-themes
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: phyos-base-themes
+Description: phyOS base theme package
+Depends: papirus-icon-theme
+Architecture: all

@@ -1,0 +1,9 @@
+Package: physettings
+Version: 1.0.2-03
+Section: utils
+Origin: https://github.com/FT-Labs/physettings/
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: physettings
+Description: System settings TUI application for phyOS
+Architecture: all

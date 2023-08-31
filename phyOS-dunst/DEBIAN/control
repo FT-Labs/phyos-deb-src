@@ -1,0 +1,11 @@
+Package: phyos-dunst
+Version: 1.9.0-0
+Section: utils
+Origin: https://dunst-project.org/
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: notification-daemon
+Depends: libc6 (>= 2.34), libcairo2 (>= 1.10.0), libgdk-pixbuf-2.0-0 (>= 2.31.1), libglib2.0-0 (>= 2.35.8), libnotify4 (>= 0.7.0), libpango-1.0-0 (>= 1.14.0), libpangocairo-1.0-0 (>= 1.22.0), libx11-6, libxext6, libxinerama1 (>= 2:1.1.4), libxrandr2 (>= 2:1.5.0), libxss1, default-dbus-session-bus | dbus-session-bus
+Description: Modified (dunst) dynamic notification-daemon for phyOS
+Conflicts: dunst
+Architecture: all

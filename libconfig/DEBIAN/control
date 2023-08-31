@@ -1,0 +1,11 @@
+Package: libconfig
+Version: 1.7.3-1
+Section: utils
+Origin: libconfig
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: libconfig
+Depends: libc6 (>= 2.34)
+Description: libconfig 11
+Replaces: libconfig9
+Architecture: all

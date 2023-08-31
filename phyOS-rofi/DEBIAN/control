@@ -1,0 +1,35 @@
+Package: phyos-rofi
+Version: 1.7.5-1
+Priority: optional
+Section: utils
+Architecture: all
+Origin: Arda Atci
+Maintainer: Arda Atci
+Provides: rofi (= 1.7.5)
+Replaces: rofi (<< 1.7.3)
+Depends: libc6 (>= 2.34), libcairo2 (>= 1.12.0), libgdk-pixbuf-2.0-0 (>= 2.31.1), libglib2.0-0 (>= 2.35.9), libpango-1.0-0 (>= 1.37.5), libpangocairo-1.0-0 (>= 1.22.0), libstartup-notification0 (>= 0.11), libxcb-cursor0 (>= 0.0.99), libxcb-ewmh2 (>= 0.4.1), libxcb-icccm4 (>= 0.4.1), libxcb-randr0 (>= 1.12), libxcb-util1 (>= 0.4.0), libxcb-xinerama0, libxcb-xkb1, libxcb1, libxkbcommon-x11-0 (>= 0.5.0), libxkbcommon0 (>= 0.7.0)
+Homepage: https://github.com/DaveDavenport/rofi/
+Description: window switcher, run dialog and dmenu replacement
+ rofi can act as an application launcher, window switcher, ssh launcher and
+ dmenu replacement.
+ .
+ Included features:
+  * Full (configurable) keyboard navigation
+  * Type to filter
+    + Tokenized: Type any word in any order to filter
+    + Case insensitive
+  * UTF-8 enabled
+    + UTF-8 aware string collating
+    + intl. keyboard support (`e -> è)
+  * Pango font rendering
+  * RTL language support
+  * Window Switcher
+    + I3 support (requires i3-wm to be installed)
+    + EWMH compatible WM
+  * Run dialog
+  * Desktop File Run dialog
+  * SSH launcher
+  * History based ordering based on use. (optional)
+  * Levenshtein distance ordering of matches. (optional)
+  * Drop in dmenu replacement (with many added improvements).
+  * Can be easily extended using scripts.

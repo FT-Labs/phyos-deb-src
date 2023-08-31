@@ -1,0 +1,36 @@
+- name: "Browsers"
+  description: "Browsers (Ungoogled chromium default)"
+  critical: false
+  hidden: false
+  selected: false
+  expanded: true
+  packages:
+    - brave-bin
+    - falkon
+    - firefox-adblock-plus
+    - firefox-ublock-origin
+    - google-chrome
+    - librewolf-bin
+    - midori
+    - min
+    - netsurf
+    - opera
+    - qutebrowser
+    - torbrowser-launcher
+- name: "Downloaders"
+  description: "Downloaders"
+  critical: false
+  hidden: false
+  selected: false
+  expanded: true
+  packages:
+    - aria2
+    - deluge
+    - filezilla
+    - fragments
+    - gdown
+    - jdownloader2
+    - ktorrent
+    - persepolis
+    - transmission-gtk
+    - xdman

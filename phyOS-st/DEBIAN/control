@@ -1,0 +1,11 @@
+Package: phyos-st
+Version: 0.8.5-07
+Section: utils
+Origin: git://git.suckless.org/st
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: st
+Depends: ncurses-term (>= 6.1+20180714-1), libc6 (>= 2.17), libfontconfig1 (>= 2.12.6), libx11-6, libxft2 (>> 2.1.1)
+Description: st build for phyOS
+Conflicts: st
+Architecture: all

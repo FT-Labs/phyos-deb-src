@@ -1,0 +1,12 @@
+Package: theinit
+Version: 1.0
+Section: utils
+Origin: Arda Atci
+Protected: Yes
+Priority: Required
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: initramfs-tools, theinit, mktheinit, init-select
+Description: THE INIT
+Conflicts: initramfs-tools, tiny-initramfs, grub2-common, grub2-pc
+Architecture: all

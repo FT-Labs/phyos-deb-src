@@ -1,0 +1,10 @@
+Package: phyos-fonts
+Version: 1.4-0
+Section: utils
+Origin: Arda Atci
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: phyos-fonts
+Depends: fontconfig, fonts-jetbrains-mono
+Description: PhyOS system fonts
+Architecture: all

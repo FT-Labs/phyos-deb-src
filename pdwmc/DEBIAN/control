@@ -1,0 +1,10 @@
+Package: pdwmc
+Version: 1.1-01
+Section: utils
+Origin: https://github.com/FT-Labs/pdwmc/
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: pdwmc
+Depends: python3-pip, python3-pyqt5, python3-tabulate, python3-pycparser
+Description: Config editor for pdwm
+Architecture: all

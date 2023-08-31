@@ -1,0 +1,11 @@
+Package: pdwm
+Version: 1.3-11
+Section: libs
+Architecture: all
+Origin: Arda Atci
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: pdwm, dwmblocks
+Description: Pdwm window manager
+Depends: xwallpaper, alsa-base, alsa-utils, anacron, at-spi2-core, bc, ca-certificates, dmz-cursor-theme, fonts-dejavu-core, fonts-freefont-ttf, phyos-fonts, phyos-system-scripts, ghostscript-x, libnotify-bin, libsasl2-modules, libu2f-udev, pulseaudio, rfkill, ubuntu-drivers-common, unzip, wireless-tools, wpasupplicant, xdg-user-dirs, xdg-user-dirs-gtk, xkb-data, xorg, yelp, zenity, zip, libxft2, xclip, libxcb-res0
+Conflicts: dwm, dwmblocks

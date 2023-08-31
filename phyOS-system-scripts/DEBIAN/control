@@ -1,0 +1,11 @@
+Package: phyos-system-scripts
+Version: 2.7.1-02
+Section: utils
+Origin: https://github.com/FT-Labs/phyOS-system-scripts
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: phyos-system-scripts
+Depends: maim, xcape, git, x11-xserver-utils, phyos-rofi, powerline, pamixer, pavucontrol, lm-sensors
+Description: Scripts & utilities for phyOS
+Conflicts: phyos-system-scripts
+Architecture: all

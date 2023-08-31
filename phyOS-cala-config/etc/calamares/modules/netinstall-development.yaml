@@ -1,0 +1,25 @@
+- name: "Development"
+  description: "Development software"
+  critical: false
+  hidden: false
+  selected: false
+  expanded: true
+  packages:
+    - arduino
+    - bluefish
+    - brackets-bin
+    - code
+    - codeblocks
+    - emacs
+    - geany
+    - geany-plugins
+    - glade
+    - intellij-idea-community-edition
+    - leafpad
+    - netbeans
+    - notepadqq
+    - openscad
+    - pycharm-community-edition
+    - qt5-tools
+    - qtcreator
+    - visual-studio-code-bin

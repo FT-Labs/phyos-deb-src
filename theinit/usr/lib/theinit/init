@@ -1,0 +1,144 @@
+#!/usr/bin/ash
+
+[ -d /dev ] || mkdir -m 0755 /dev
+[ -d /sys ] || mkdir /sys
+[ -d /proc ] || mkdir /proc
+[ -d /tmp ] || mkdir /tmp
+[ -d /run ] || mkdir /run
+[ -d /run/plymouth ] || mkdir /run/plymouth
+[ -d /new_root ] || mkdir /new_root
+
+udevd_running=0
+mount_handler=default_mount_handler
+init=/sbin/init
+rd_logmask=0
+
+. /init_functions
+
+mount_setup
+
+# parse the kernel command line
+parse_cmdline </proc/cmdline
+
+# setup logging as early as possible
+rdlogger_start
+for d in ${disablehooks//,/ }; do
+    [ -e "/hooks/$d" ] && chmod 644 "/hooks/$d"
+done
+
+. /config
+
+run_hookfunctions 'run_earlyhook' 'early hook' $EARLYHOOKS
+
+if [ -n "$earlymodules$MODULES" ]; then
+    modprobe -qab ${earlymodules//,/ } $MODULES
+fi
+
+run_hookfunctions 'run_hook' 'hook' $HOOKS
+
+# honor the old behavior of break=y as a synonym for break=premount
+if [ "${break}" = "y" ] || [ "${break}" = "premount" ]; then
+    echo ":: Pre-mount break requested, type 'exit' to resume operation"
+    launch_interactive_shell
+fi
+
+if [ -f /proc/sys/crypto/fips_enabled ] && [ $(cat /proc/sys/crypto/fips_enabled) -eq "1" ] ; then
+    modules_flags="aesni-intel:aes ghash_clmulni_intel:pclmulqdq"
+    check_modules
+    check_kernel_integrity
+fi
+
+if [ -n "$kern" ]; then
+        mount "$root" /new_root
+        path=$(find /new_root/boot -name "vmlinuz-$kern")
+        rm /etc/modprobe.d/gpu.conf
+        if [ -z $path ]; then
+            path=$(find /new_root/boot -type f -name "vmlinuz*" | sort -n | tail -1)
+            kern="${path##*vmlinuz-}"
+        fi
+        if [ -z "${kern%%*fips*}" ]; then
+            mv /etc/fips.conf /etc/modprobe.d/fips.conf
+            rm -rf /boot
+            mkdir /boot
+            cp -f $path /boot/
+            cp -f /new_root/boot/.* /boot/
+        fi
+        mkdir -p /usr/lib/modules/$kern/kernel
+        cd /new_root/usr/lib/modules/$kern
+        ext=$(head -1 ./modules.dep | tr -d ":\n")
+        ext="${ext##*.ko}"
+        mods=$(cat modules.builtin | tr "\n" "|")
+        cat /bin/mod.sh | grep -v -E "${mods::-1}" | sed "s/\$/$ext/g" | cpio --quiet -pdu /usr/lib/modules/$kern 2>/dev/null
+        cp -f /new_root/usr/lib/modules/$kern/module* /usr/lib/modules/$kern
+        cp -rf /new_root/usr/lib/modules/$kern/kernel/drivers/gpu/drm /usr/lib/modules/$kern/kernel/gpu/drm 2>/dev/null
+        # cd /new_root/usr/lib/firmware
+        # Should firmware's be added?
+        # ls /usr/lib/firmware | while read d; do cp -rf ./"${d%%.*}"* /usr/lib/firmware; done
+        # cat /bin/firm.sh | xargs -I % sh -c "ls ./%* 2>/dev/null" | cpio -pdu /usr/lib/firmware
+        depmod -a $kern
+    {
+        cd /
+        find . -type d \( -path ./dev -o -path ./new_root -o -path ./run -o -path ./sys -o -path ./proc -o -path ./usr/lib/modules/$(uname -r) \) -prune -o -print | cpio -H newc -o 2>/dev/null
+    } > /run/theinit.img
+
+    if [ ! -z "${kern#*fips*}" ]; then
+        kexec -l $path --initrd=/run/theinit.img --append=root="$root"\ fips=1\ rw\ udev.log_level=3\ quiet\ loglevel=3\ splash
+    else
+        kexec -l $path --initrd=/run/theinit.img --append=root="$root"\ udev.log_level=3\ loglevel=3\ rw\ quiet\ loglevel=3\ splash
+    fi
+
+    if [ "${break}" = "y" ] || [ "${break}" = "prekexec" ]; then
+        echo ":: Pre-mount break requested, type 'exit' to resume operation"
+        launch_interactive_shell
+    fi
+    plymouth --quit
+    run_hookfunctions 'run_cleanuphook' 'cleanup hook' $CLEANUPHOOKS
+    rdlogger_stop
+    umount -a
+    kexec -i -e
+fi
+
+rootdev=$(resolve_device "$root") && root=$rootdev
+unset rootdev
+
+fsck_root
+
+# Mount root at /new_root
+"$mount_handler" /new_root
+
+run_hookfunctions 'run_latehook' 'late hook' $LATEHOOKS
+run_hookfunctions 'run_cleanuphook' 'cleanup hook' $CLEANUPHOOKS
+
+if [ "$(stat -c %D /)" = "$(stat -c %D /new_root)" ]; then
+    # Nothing got mounted on /new_root. This is the end, we don't know what to do anymore
+    # We fall back into a shell, but the shell has now PID 1
+    # This way, manual recovery is still possible.
+    err "Failed to mount the real root device."
+    echo "Bailing out, you are on your own. Good luck."
+    echo
+    launch_interactive_shell --exec
+elif [ ! -x "/new_root${init}" ]; then
+    cd /new_root
+    if [ ! -x "${init}" ]; then
+        # Successfully mounted /new_root, but ${init} is missing
+        # The same logic as above applies
+        err "Root device mounted successfully, but ${init} does not exist."
+        echo "Bailing out, you are on your own. Good luck."
+        echo
+        launch_interactive_shell --exec
+    fi
+fi
+
+if [ "${break}" = "postmount" ]; then
+    echo ":: Post-mount break requested, type 'exit' to resume operation"
+    launch_interactive_shell
+fi
+
+# this should always be the last thing we do before the switch_root.
+rdlogger_stop
+
+exec env -i \
+    "TERM=$TERM" \
+    /usr/bin/switch_root /new_root $init "$@"
+
+# vim: set ft=sh ts=4 sw=4 et:

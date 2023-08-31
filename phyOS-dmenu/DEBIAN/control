@@ -1,0 +1,11 @@
+Package: phyos-dmenu
+Version: 5.0-1
+Section: utils
+Origin: https://github.com/FT-Labs/phyOS-dmenu
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: dmenu
+Depends: coreutils
+Description: dmenu build for phyOS
+Conflicts: dmenu
+Architecture: all

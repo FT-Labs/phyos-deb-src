@@ -1,0 +1,9 @@
+Package: phyos-sysconf
+Version: 2.4-0
+Section: utils
+Origin: https://github.com/FT-Labs/phyOS-sysconf
+Maintainer: Arda Atci
+Original-Maintainer: Arda Atci
+Provides: phyos-sysconf
+Description: Configuration files for phyOS
+Architecture: all

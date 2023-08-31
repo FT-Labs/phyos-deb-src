@@ -1,0 +1,26 @@
+- name: "Communication"
+  description: "Communication software"
+  critical: false
+  hidden: false
+  selected: false
+  expanded: true
+  packages:
+    - discord
+    - element-desktop
+    - mattermost-desktop
+    - google-chat-linux-bin
+    - hexchat
+    - jitsi-meet-desktop-bin
+    - mumble
+    - neochat
+    - pidgin
+    - qtox
+    - skypeforlinux-stable-bin
+    - signal-desktop
+    - slack-desktop
+    - teams
+    - tweetdeck-desktop
+    - viber
+    - whatsapp-nativefier
+    - wire-desktop
+    - zoom

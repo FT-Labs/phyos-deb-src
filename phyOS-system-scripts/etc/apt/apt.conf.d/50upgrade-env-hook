@@ -1,0 +1,1 @@
+APT::Upgrade::Post-Invoke{"/bin/sh -c '/bin/cat /usr/share/phyos/util/environment > /etc/environment'"; };
